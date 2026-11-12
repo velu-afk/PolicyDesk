@@ -1,4 +1,4 @@
-# PolicyDesk — Enterprise RAG Document Assistant
+# PolicyDesk - Enterprise RAG Document Assistant
 
 **PolicyDesk** is a full-stack Retrieval-Augmented Generation (RAG) web application designed to help organizations manage and access internal policy documentation. Administrators upload corporate PDF and plain-text policy documents into a managed knowledge base, and authenticated users ask natural-language questions through a conversational AI interface. Every answer is grounded in retrieved document chunks, includes verifiable source attributions (document name, document ID, page number, chunk index, cosine similarity score, and verbatim passage), and explicitly states when requested information cannot be found in the uploaded documents.
 
