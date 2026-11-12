@@ -25,14 +25,14 @@ class TestAuthentication(unittest.TestCase):
             "/api/auth/register",
             json={
                 "name": "Priya Nair",
-                "email": "priya.nair@quantumapps.ai",
+                "email": "priya.nair@example.com",
                 "password": "StrongPassword_2026!",
             },
         )
         self.assertEqual(resp.status_code, 201, resp.text)
         data = resp.json()
         self.assertIn("access_token", data)
-        self.assertEqual(data["user"]["email"], "priya.nair@quantumapps.ai")
+        self.assertEqual(data["user"]["email"], "priya.nair@example.com")
         self.assertEqual(data["user"]["role"], "user")
 
     def test_registration_rejects_privilege_escalation_role_field(self) -> None:
@@ -41,7 +41,7 @@ class TestAuthentication(unittest.TestCase):
             "/api/auth/register",
             json={
                 "name": "Attacker",
-                "email": "attacker@quantumapps.ai",
+                "email": "attacker@example.com",
                 "password": "StrongPassword_2026!",
                 "role": "admin",
             },

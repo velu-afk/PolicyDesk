@@ -27,9 +27,9 @@ class TestDocuments(unittest.TestCase):
     def test_pdf_upload_and_chunk_creation(self) -> None:
         pdf_bytes = generate_sample_pdf_bytes(
             [
-                "QuantumApps AI Information Security Policy Page 1.\n"
+                "Company Information Security Policy Page 1.\n"
                 "All employees must use hardware FIDO2 multi-factor authentication keys.",
-                "QuantumApps AI Information Security Policy Page 2.\n"
+                "Company Information Security Policy Page 2.\n"
                 "Suspected security incidents must be reported to SOC within 2 hours.",
             ]
         )

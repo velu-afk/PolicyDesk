@@ -19,11 +19,11 @@ logger = logging.getLogger(__name__)
 
 SAMPLE_POLICIES = [
     (
-        "QuantumApps_Remote_Work_and_Hybrid_Policy_2026.txt",
-        """QUANTUMAPPS AI — ENTERPRISE REMOTE WORK & HYBRID WORKPLACE POLICY (EFFECTIVE JANUARY 1, 2026)
+        "Remote_Work_and_Hybrid_Policy_2026.txt",
+        """REMOTE WORK & HYBRID WORKPLACE POLICY (EFFECTIVE JANUARY 1, 2026)
 
 1. PURPOSE AND SCOPE
-This policy establishes guidelines for hybrid and remote work arrangements for all full-time and part-time employees at QuantumApps AI. Contractors and temporary personnel require written approval from their Department VP and Human Resources before working remotely.
+This policy establishes guidelines for hybrid and remote work arrangements for all full-time and part-time employees at the company. Contractors and temporary personnel require written approval from their Department VP and Human Resources before working remotely.
 
 2. STANDARD HYBRID SCHEDULE
 Full-time employees are expected to work from their assigned regional office at least three (3) days per week (Tuesday, Wednesday, and Thursday are designated as core in-office collaboration days). Employees may work remotely up to two (2) days per week (Monday and Friday) without additional executive sign-off.
@@ -33,7 +33,7 @@ Core availability hours for all employees are 10:00 AM to 4:00 PM in the employe
 Employees who have completed at least six (6) months of continuous service with a performance rating of "Meets Expectations" or higher may apply for up to four (4) weeks (20 business days) of temporary "Work From Anywhere" (WFA) per calendar year. WFA requests must be submitted in the HR Portal at least 14 calendar days in advance and approved by both the direct manager and Tax/Compliance due to permanent establishment tax regulations.
 
 4. HOME OFFICE STIPEND & INTERNET REIMBURSEMENT
-QuantumApps AI provides a one-time ergonomic home office setup stipend of up to $750 USD (or local currency equivalent) for newly hired full-time employees. Receipts must be submitted through Expensify within 90 days of the start date.
+The company provides a one-time ergonomic home office setup stipend of up to $750 USD (or local currency equivalent) for newly hired full-time employees. Receipts must be submitted through Expensify within 90 days of the start date.
 Additionally, full-time employees receive a monthly high-speed internet reimbursement of up to $60 USD per month, provided the connection delivers at least 100 Mbps download speed.
 
 5. SECURITY REQUIREMENTS FOR REMOTE WORK
@@ -41,8 +41,8 @@ Employees working remotely must use only company-issued laptops equipped with Cr
 """,
     ),
     (
-        "QuantumApps_Information_Security_and_Data_Protection_Policy.txt",
-        """QUANTUMAPPS AI — INFORMATION SECURITY, ACCESS CONTROL & INCIDENT RESPONSE POLICY (VERSION 4.2)
+        "Information_Security_and_Data_Protection_Policy.txt",
+        """INFORMATION SECURITY, ACCESS CONTROL & INCIDENT RESPONSE POLICY (VERSION 4.2)
 
 1. PASSWORD AND AUTHENTICATION STANDARDS
 All employee accounts accessing corporate systems must use Hardware Multi-Factor Authentication (FIDO2/WebAuthn YubiKey or Passkey) alongside a passphrase of at least 14 characters. Password rotation is required immediately upon any suspected compromise, or every 365 days for privileged administrative accounts.
@@ -56,13 +56,13 @@ Company data is classified into four tiers:
 - Tier 4 (Restricted / PII & AI Training Data): Customer personally identifiable information (PII), authentication credentials, and encryption keys. All Tier 4 data must be encrypted at rest using AES-256 and in transit using TLS 1.3.
 
 3. SECURITY INCIDENT REPORTING SLA
-Any employee who discovers a suspected data breach, lost or stolen company device, unauthorized access, or phishing compromise must notify the Security Operations Center (security@quantumapps.ai) within two (2) hours of discovery.
+Any employee who discovers a suspected data breach, lost or stolen company device, unauthorized access, or phishing compromise must notify the Security Operations Center (the designated Security Operations Center contact) within two (2) hours of discovery.
 For confirmed Tier 4 data breaches affecting customer records, the Incident Response Team must notify affected enterprise customers and regulatory authorities within 72 hours in compliance with GDPR Article 33.
 """,
     ),
     (
-        "QuantumApps_Employee_Leave_and_Expense_Reimbursement_Policy.txt",
-        """QUANTUMAPPS AI — PAID TIME OFF (PTO), PARENTAL LEAVE & TRAVEL EXPENSE POLICY
+        "Employee_Leave_and_Expense_Reimbursement_Policy.txt",
+        """PAID TIME OFF (PTO), PARENTAL LEAVE & TRAVEL EXPENSE POLICY
 
 1. ANNUAL PAID TIME OFF (PTO) & SICK LEAVE
 Full-time employees accrue 22 days of Paid Time Off (PTO) per calendar year, accrued monthly at 1.83 days per month. Unused PTO up to a maximum of 5 days may be carried over into the first quarter (until March 31) of the following calendar year; any carryover balance exceeding 5 days is forfeited without cash payout unless required by state law.

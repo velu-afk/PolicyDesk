@@ -15,7 +15,7 @@ export const AuthLayout: React.FC<{ children: React.ReactNode }> = ({ children }
               PolicyDesk
             </span>
             <span className="text-xs text-indigo-300 font-medium tracking-wider uppercase">
-              QuantumApps AI • Knowledge Platform
+              PolicyDesk • AI-Powered Policy Assistant
             </span>
           </div>
         </div>

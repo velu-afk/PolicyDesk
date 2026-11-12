@@ -24,10 +24,10 @@ class TestRAGPipeline(unittest.TestCase):
         # Ingest a 2-page PDF policy and a TXT policy
         pdf_bytes = generate_sample_pdf_bytes(
             [
-                "QUANTUMAPPS REMOTE WORK POLICY (PAGE 1)\n"
+                "REMOTE WORK POLICY (PAGE 1)\n"
                 "Full-time employees must work from their regional office at least 3 days per week "
                 "(Tuesday, Wednesday, and Thursday). Employees may work remotely up to 2 days per week.",
-                "QUANTUMAPPS HOME OFFICE STIPEND POLICY (PAGE 2)\n"
+                "HOME OFFICE STIPEND POLICY (PAGE 2)\n"
                 "Newly hired full-time employees receive a one-time ergonomic home office setup stipend "
                 "of $750 USD and a monthly high-speed internet reimbursement of $60 USD.",
             ]

@@ -19,7 +19,7 @@ export const Navbar: React.FC = () => {
           Workspace:
         </span>
         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-800">
-          QuantumApps AI Policy Repository
+          PolicyDesk
         </span>
       </div>
 

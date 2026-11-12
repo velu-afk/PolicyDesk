@@ -1,0 +1,16 @@
+INFORMATION SECURITY, ACCESS CONTROL & INCIDENT RESPONSE POLICY (VERSION 4.2)
+
+1. PASSWORD AND AUTHENTICATION STANDARDS
+All employee accounts accessing corporate systems must use Hardware Multi-Factor Authentication (FIDO2/WebAuthn YubiKey or Passkey) alongside a passphrase of at least 14 characters. Password rotation is required immediately upon any suspected compromise, or every 365 days for privileged administrative accounts.
+API keys, database credentials, and JWT signing secrets must NEVER be committed to Git repositories, pasted in Slack channels, or stored in plaintext configuration files. All production secrets must be injected via encrypted platform environment variables.
+
+2. DATA CLASSIFICATION AND RETENTION
+Company data is classified into four tiers:
+- Tier 1 (Public): Marketing materials and public documentation.
+- Tier 2 (Internal): Internal wikis, general company announcements, and non-sensitive project timelines.
+- Tier 3 (Confidential): Customer contracts, employee HR records, and proprietary source code. Retained for 7 years after contract termination.
+- Tier 4 (Restricted / PII & AI Training Data): Customer personally identifiable information (PII), authentication credentials, and encryption keys. All Tier 4 data must be encrypted at rest using AES-256 and in transit using TLS 1.3.
+
+3. SECURITY INCIDENT REPORTING SLA
+Any employee who discovers a suspected data breach, lost or stolen company device, unauthorized access, or phishing compromise must notify the Security Operations Center (the designated Security Operations Center contact) within two (2) hours of discovery.
+For confirmed Tier 4 data breaches affecting customer records, the Incident Response Team must notify affected enterprise customers and regulatory authorities within 72 hours in compliance with GDPR Article 33.

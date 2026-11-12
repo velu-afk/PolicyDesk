@@ -1,0 +1,18 @@
+REMOTE WORK & HYBRID WORKPLACE POLICY (EFFECTIVE JANUARY 1, 2026)
+
+1. PURPOSE AND SCOPE
+This policy establishes guidelines for hybrid and remote work arrangements for all full-time and part-time employees at the company. Contractors and temporary personnel require written approval from their Department VP and Human Resources before working remotely.
+
+2. STANDARD HYBRID SCHEDULE
+Full-time employees are expected to work from their assigned regional office at least three (3) days per week (Tuesday, Wednesday, and Thursday are designated as core in-office collaboration days). Employees may work remotely up to two (2) days per week (Monday and Friday) without additional executive sign-off.
+Core availability hours for all employees are 10:00 AM to 4:00 PM in the employee's primary office time zone.
+
+3. FULL REMOTE ELIGIBILITY & WORK-FROM-ANYWHERE WEEKS
+Employees who have completed at least six (6) months of continuous service with a performance rating of "Meets Expectations" or higher may apply for up to four (4) weeks (20 business days) of temporary "Work From Anywhere" (WFA) per calendar year. WFA requests must be submitted in the HR Portal at least 14 calendar days in advance and approved by both the direct manager and Tax/Compliance due to permanent establishment tax regulations.
+
+4. HOME OFFICE STIPEND & INTERNET REIMBURSEMENT
+The company provides a one-time ergonomic home office setup stipend of up to $750 USD (or local currency equivalent) for newly hired full-time employees. Receipts must be submitted through Expensify within 90 days of the start date.
+Additionally, full-time employees receive a monthly high-speed internet reimbursement of up to $60 USD per month, provided the connection delivers at least 100 Mbps download speed.
+
+5. SECURITY REQUIREMENTS FOR REMOTE WORK
+Employees working remotely must use only company-issued laptops equipped with CrowdStrike Falcon EDR, full-disk FileVault/BitLocker encryption, and the corporate WireGuard VPN when accessing internal staging or production databases. Public Wi-Fi networks at cafes, airports, or hotels must never be used without an active corporate VPN tunnel.
