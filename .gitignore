@@ -1,0 +1,35 @@
+# Byte-compiled / cache / virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+
+# Environment variables and secrets (NEVER commit secrets)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+frontend/.env
+
+# Local SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Frontend dependencies and build artifacts
+node_modules/
+frontend/node_modules/
+frontend/dist/
+.vercel/
+
+# IDE and OS files
+.DS_Store
+.vscode/
+.idea/
+*.swp
