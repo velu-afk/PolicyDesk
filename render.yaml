@@ -1,34 +1,65 @@
+
 services:
   - type: web
     name: policydesk-backend
     runtime: python
     rootDir: backend
     plan: free
-    buildCommand: pip install --upgrade pip && pip install -r requirements.txt && alembic upgrade head && python -m app.seed
+
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt && alembic upgrade head
+
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
     healthCheckPath: /health
+
     envVars:
       - key: APP_ENV
         value: production
+
       - key: PYTHON_VERSION
         value: 3.11.9
+
       - key: DATABASE_URL
         sync: false
+
       - key: GEMINI_API_KEY
         sync: false
+
       - key: GEMINI_LLM_MODEL
-        value: gemini-2.5-flash
+        value: gemini-3.8-flash
+
       - key: GEMINI_EMBEDDING_MODEL
         value: gemini-embedding-001
+
       - key: GEMINI_EMBEDDING_DIMENSIONS
         value: "768"
+
+      - key: GEMINI_TEMPERATURE
+        value: "0.1"
+
       - key: JWT_SECRET_KEY
         generateValue: true
+
       - key: ALLOWED_ORIGINS
         sync: false
+
+      - key: INITIAL_ADMIN_NAME
+        value: PolicyDesk System Admin
+
       - key: INITIAL_ADMIN_EMAIL
         value: admin@policydesk.io
+
       - key: INITIAL_ADMIN_PASSWORD
         sync: false
+
+      - key: INITIAL_USER_NAME
+        value: Alex Rivera
+
+      - key: INITIAL_USER_EMAIL
+        value: user@policydesk.io
+
+      - key: INITIAL_USER_PASSWORD
+        sync: false
+
       - key: SEED_SAMPLE_DOCS
-        value: "true"
+        value: "false"
