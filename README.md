@@ -5,7 +5,7 @@
 ## 1. Project Choice & Overview
 
 - **Selected Track**: Project A — **PolicyDesk: RAG Document Assistant**
-- **Core Objective**: Provide zero-hallucination, source-attributed policy Q&A with strict role-based access control (`admin` vs. `user`), persistent vector embeddings in PostgreSQL ([pgvector](https://github.com/pgvector/pgvector)), and a modern SaaS user interface built with [React](https://react.dev), [TypeScript](https://www.typescriptlang.org), and [Tailwind CSS](https://tailwindcss.com).
+- **Core Objective**: Provide grounded, source-attributed policy Q&A with strict role-based access control (`admin` vs. `user`), persistent vector embeddings in PostgreSQL ([pgvector](https://github.com/pgvector/pgvector)), and a modern SaaS user interface built with [React](https://react.dev), [TypeScript](https://www.typescriptlang.org), and [Tailwind CSS](https://tailwindcss.com).
 
 ## 2. Main Features
 
@@ -18,7 +18,7 @@
   - Structural whitespace normalization and configurable paragraph/sentence-aware overlapping chunking (`CHUNK_SIZE=1000`, `CHUNK_OVERLAP=200`).
   - Semantic embedding generation (`768` dimensions) using the [Google GenAI Python SDK](https://github.com/googleapis/python-genai) (`google-genai`) and the [`gemini-embedding-001`](https://aistudio.google.com/api-reference/embeddings/embed-content) model.
   - Cosine similarity vector search powered by [pgvector for Python & SQLAlchemy](https://github.com/pgvector/pgvector-python) (`<=>` cosine distance with HNSW indexing on PostgreSQL) and configurable threshold filtering (`SIMILARITY_THRESHOLD=0.35`) so unrelated chunks are never returned just to fill `top_k`.
-  - Grounded answer synthesis via [`gemini-2.5-flash`](https://aistudio.google.com/docs/migrate) governed by a strict system prompt that forbids outside knowledge or fabricated citations.
+  - Grounded answer synthesis via [`gemini-3.8-flash`](https://aistudio.google.com/docs/migrate) governed by a strict system prompt that forbids outside knowledge or fabricated citations.
 
 ### Bonus Features Implemented
 1. **Persistent Multi-Turn Chat History**: Full conversation and message persistence with per-user ownership isolation.
@@ -50,7 +50,7 @@
 |  |  - DocumentService (Validation -> PyMuPDF Extraction -> Overlapping Chunks) |  |
 |  |  - EmbeddingService (google-genai SDK -> gemini-embedding-001 [768-dim])    |  |
 |  |  - RetrievalService (pgvector Cosine Distance <=> + Similarity Threshold)   |  |
-|  |  - RAGService (Strict System Prompt -> gemini-2.5-flash + Source Grounding) |  |
+|  |  - RAGService (Strict System Prompt -> gemini-3.8-flash + Source Grounding) |  |
 |  +-----------------------------------------------------------------------------+  |
 +-----------------------------------------|-----------------------------------------+
                                           | SQLAlchemy 2.0 ORM + Alembic Migrations
@@ -70,7 +70,7 @@
 | **Backend Framework** | [FastAPI](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/) + [Pydantic](https://docs.pydantic.dev/) | High-throughput ASGI routing, automatic OpenAPI (`/docs`) schema generation, and strict request/response validation (`extra="forbid"` on registration). |
 | **ORM & Migrations** | [SQLAlchemy 2.0](https://docs.sqlalchemy.org/en/20/core/metadata.html) + Alembic | Normalized relational mapping with declarative foreign keys, cascading deletes, and repeatable schema migrations. |
 | **Database & Vector Store** | [Neon PostgreSQL](https://neon.com/faqs/best-backend-python-django-fastapi) + [pgvector](https://github.com/pgvector/pgvector) | Stores relational metadata (`users`, `documents`, `conversations`) and `768`-dimensional embeddings in a single ACID-compliant database using HNSW cosine indexes. |
-| **AI & Embeddings** | [Google GenAI SDK (`google-genai`)](https://github.com/googleapis/python-genai) | Official unified SDK supporting [`gemini-2.5-flash`](https://aistudio.google.com/docs/migrate) for low-latency grounded generation and [`gemini-embedding-001`](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/embeddings/get-text-embeddings) for semantic vectors. |
+| **AI & Embeddings** | [Google GenAI SDK (`google-genai`)](https://github.com/googleapis/python-genai) | Official unified SDK supporting [`gemini-3.8-flash`](https://aistudio.google.com/docs/migrate) for low-latency grounded generation and [`gemini-embedding-001`](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/embeddings/get-text-embeddings) for semantic vectors. |
 | **Document Parsing** | [PyMuPDF (`fitz`)](https://pymupdf.readthedocs.io/) | High-speed native PDF text extraction with exact 1-indexed page attribution (`page.get_text("text")`). |
 | **Authentication** | [JWT + Argon2 / Bcrypt](https://neon.com/guides/fastapi-jwt) | Stateless RFC 7519 HS256 bearer tokens paired with salted memory-hard password hashing and per-route RBAC dependencies. |
 
@@ -88,7 +88,7 @@
    - Filters results by `SIMILARITY_THRESHOLD=0.35`. Chunks scoring below the threshold are discarded so unrelated passages are never passed to the LLM.
 3. **Grounded Answer Generation (`RAGService.answer_question`)**:
    - If zero chunks meet the similarity threshold, immediately returns the honest fallback message with an empty `sources: []` array.
-   - Otherwise, formats the retrieved chunks with their document names, IDs, and page numbers into the prompt context and invokes [`gemini-2.5-flash`](https://aistudio.google.com/docs/migrate) at `temperature=0.1`.
+   - Otherwise, formats the retrieved chunks with their document names, IDs, and page numbers into the prompt context and invokes [`gemini-3.8-flash`](https://aistudio.google.com/docs/migrate) at `temperature=0.1`.
    - Attaches the exact `SourceAttribution` objects from the retrieved database chunks so frontend citations are 100% verifiable.
 
 ## 6. Authentication & Role-Based Access Control (RBAC)
@@ -155,8 +155,8 @@ cp .env.example .env
 alembic upgrade head
 
 # Seed initial Admin account, Demo User account, and sample policy documents
-INITIAL_ADMIN_PASSWORD="ChangeMe_Admin_2026!" \
-INITIAL_USER_PASSWORD="ChangeMe_User_2026!" \
+INITIAL_ADMIN_PASSWORD="<your-secure-admin-password>" \
+INITIAL_USER_PASSWORD="<your-secure-user-password>" \
 SEED_SAMPLE_DOCS="true" \
 python3 -m app.seed
 
@@ -180,7 +180,7 @@ Open `http://localhost:5173` in your browser.
 | :--- | :--- | :--- |
 | `DATABASE_URL` | Neon PostgreSQL connection string (`postgresql+psycopg2://...`) | `sqlite:///./policydesk.db` (local fallback) |
 | `GEMINI_API_KEY` | Google AI Studio API key for Gemini LLM & Embeddings | Required for live Gemini calls |
-| `GEMINI_LLM_MODEL` | Configurable Gemini generation model | `gemini-2.5-flash` |
+| `GEMINI_LLM_MODEL` | Configurable Gemini generation model | `gemini-3.8-flash` |
 | `GEMINI_EMBEDDING_MODEL` | Configurable Gemini embedding model | `gemini-embedding-001` |
 | `GEMINI_EMBEDDING_DIMENSIONS` | Vector embedding dimensionality | `768` |
 | `JWT_SECRET_KEY` | 64-byte cryptographic secret for signing HS256 JWTs | Required in production |
@@ -190,7 +190,7 @@ Open `http://localhost:5173` in your browser.
 | `CHUNK_SIZE` / `CHUNK_OVERLAP` | Character chunk size and overlap window | `1000` / `200` |
 | `RETRIEVAL_TOP_K` | Maximum chunks retrieved per query | `5` |
 | `SIMILARITY_THRESHOLD` | Minimum cosine similarity (`0.0–1.0`) required to include a chunk | `0.35` |
-| `ALLOWED_ORIGINS` | Comma-separated CORS origins | `http://localhost:5173,https://policydesk.vercel.app` |
+| `ALLOWED_ORIGINS` | Comma-separated CORS origins | `http://localhost:5173,https://policydesk-inky.vercel.app` |
 
 ### Frontend (`frontend/.env`)
 | Variable | Description | Example |
@@ -199,13 +199,13 @@ Open `http://localhost:5173` in your browser.
 
 ## 11. Demo Credentials (Seeded via Environment Variables)
 
-When seeded using the default `.env.example` values (`python3 -m app.seed`):
+The seed script creates the following demo accounts when the corresponding environment variables are configured:
 - **Administrator Account**:
   - **Email**: `admin@policydesk.io`
-  - **Password**: Configured via `INITIAL_ADMIN_PASSWORD` (e.g., `ChangeMe_Admin_2026!`)
+  - **Password**: Configured through the corresponding environment variable. Not published in this repository.
 - **Normal User Account**:
   - **Email**: `user@policydesk.io`
-  - **Password**: Configured via `INITIAL_USER_PASSWORD` (e.g., `ChangeMe_User_2026!`)
+ - **Password**: Configured through the corresponding environment variable. Not published in this repository.
 
 ## 12. Automated Testing Instructions
 
@@ -213,29 +213,42 @@ Run the complete automated test suite covering Authentication, Document Ingestio
 
 ```bash
 cd PolicyDesk/backend
-python3 -m unittest discover -s tests -v
+python -m pytest -q
 ```
 
-## 13. Cloud Deployment Guide (Neon + Render + Vercel)
+## 13. Live Deployment
 
-> **Deployment Verification Note**: Because live cloud deployment requires your personal Neon, Render, and Vercel account credentials and your `GEMINI_API_KEY`, this repository includes complete, production-ready deployment blueprints (`render.yaml` and `frontend/vercel.json`). Follow these steps to deploy in under 10 minutes:
+PolicyDesk is deployed using the following cloud services:
 
-1. **Database — [Neon Serverless PostgreSQL](https://neon.com/guides/fastapi-jwt)**:
-   - Create a free Neon project (`Postgres 16`) and copy the pooled connection string (`postgresql://...`).
-   - In the Neon SQL Editor, run `CREATE EXTENSION IF NOT EXISTS vector;` (also executed automatically by `alembic upgrade head` and `init_db()`).
-2. **Backend — Render Web Service (`render.yaml`)**:
-   - Push `PolicyDesk/` to GitHub and connect the repository on Render (`New -> Blueprint` or `New -> Web Service` with Root Directory `backend`).
-   - Build Command: `pip install --upgrade pip && pip install -r requirements.txt && alembic upgrade head && python -m app.seed`
-   - Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-   - Set Environment Variables in Render Dashboard: `DATABASE_URL`, `GEMINI_API_KEY`, `JWT_SECRET_KEY`, `INITIAL_ADMIN_EMAIL`, `INITIAL_ADMIN_PASSWORD`, `ALLOWED_ORIGINS`.
-   - Verify live health at `https://<your-render-service>.onrender.com/health` and Swagger docs at `https://<your-render-service>.onrender.com/docs`.
-3. **Frontend — Vercel (`frontend/vercel.json`)**:
-   - Import the GitHub repository in Vercel and set **Root Directory** to `frontend`.
-   - Framework Preset: `Vite` (`npm run build`, Output Directory: `dist`).
-   - Set Environment Variable: `VITE_API_BASE_URL=https://<your-render-service>.onrender.com`.
-   - Deploy and add your live `https://<your-project>.vercel.app` URL to `ALLOWED_ORIGINS` in Render.
+| Component | Platform | URL |
+|---|---|---|
+| Frontend | Vercel | https://policydesk-inky.vercel.app |
+| Backend API | Render | https://policydesk-backend-5cye.onrender.com |
+| API Documentation | FastAPI Swagger UI | https://policydesk-backend-5cye.onrender.com/docs |
+| Database | Neon PostgreSQL | Hosted PostgreSQL with pgvector |
+
+### Production Configuration
+
+- **Frontend:** React, TypeScript and Vite, deployed on Vercel.
+- **Backend:** FastAPI application deployed as a Render Web Service.
+- **Database:** Neon PostgreSQL with the pgvector extension for persistent vector storage.
+- **AI Services:** Google Gemini for document embeddings and grounded answer generation.
+- **Authentication:** JWT-based authentication with backend-enforced role-based access control.
+
+### Deployment Verification
+
+The production application has been tested for:
+- User and administrator authentication.
+- Role-based access restrictions.
+- PDF and TXT document ingestion.
+- Persistent document chunks and vector embeddings.
+- Grounded question answering with source citations.
+- Honest fallback responses when relevant information is unavailable.
+
+The backend health endpoint is available at `/health`, and interactive API documentation is available at `/docs`.
 
 ## 14. Known Limitations & Future Improvements
 
-- **OCR for Scanned Image-Only PDFs**: Native PDF text extraction via [PyMuPDF](https://pymupdf.readthedocs.io/) extracts embedded text layers rapidly; scanned image-only PDFs without an OCR text layer are explicitly flagged with a clear validation error (`HTTP 422`) rather than silently indexing empty pages. Future versions can integrate Gemini Vision multimodal page OCR for scanned documents.
-- **Synchronous Ingestion on Free Tier**: Document chunking and embedding run within the upload request lifecycle for simplicity on Render's single-instance free tier; for 500+ page manuals, offloading ingestion to a background worker queue (Celery/Redis or FastAPI `BackgroundTasks` with WebSocket progress) will further improve responsiveness.
+- **OCR for Scanned Image-Only PDFs:** The current PDF extraction pipeline uses PyMuPDF to extract embedded text. Scanned PDFs without a text layer are rejected rather than silently indexed with empty content. Future versions could integrate OCR for scanned documents.
+- **Synchronous Document Ingestion:** Document extraction, chunking, and embedding generation run during the upload request. A background worker system could improve responsiveness for large documents and higher upload volumes.
+- **LLM API Quotas:** Gemini API usage is subject to the configured account's rate limits and quotas. Temporary quota exhaustion can affect answer generation. The application includes a grounded fallback mechanism when generation is unavailable.
