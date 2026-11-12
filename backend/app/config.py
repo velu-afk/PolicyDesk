@@ -62,7 +62,7 @@ class Settings:
 
         # Google Gemini AI Settings
         self.GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
-        self.GEMINI_LLM_MODEL: str = os.getenv("GEMINI_LLM_MODEL", "gemini-2.5-flash")
+        self.GEMINI_LLM_MODEL = os.getenv("GEMINI_LLM_MODEL", "gemini-3.8-flash")
         self.GEMINI_EMBEDDING_MODEL: str = os.getenv(
             "GEMINI_EMBEDDING_MODEL", "gemini-embedding-001"
         )
