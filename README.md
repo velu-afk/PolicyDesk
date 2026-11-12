@@ -205,7 +205,7 @@ The seed script creates the following demo accounts when the corresponding envir
   - **Password**: Configured through the corresponding environment variable. Not published in this repository.
 - **Normal User Account**:
   - **Email**: `user@policydesk.io`
- - **Password**: Configured through the corresponding environment variable. Not published in this repository.
+  - **Password**: Configured through the corresponding environment variable. Not published in this repository.
 
 ## 12. Automated Testing Instructions
 
